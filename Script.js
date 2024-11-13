@@ -1,35 +1,27 @@
-// Handle sending a message and getting a response
-function sendMessage() {
-    const userInput = document.getElementById("user-input").value;
-    if (userInput.trim() === "") return;
-    
-    addMessage(userInput, "user");
-    document.getElementById("user-input").value = "";
+document.addEventListener("DOMContentLoaded", () => {
+  const storyForm = document.getElementById("story-form");
+  const newsArticlesSection = document.getElementById("news-articles");
 
-    // Simulate a response from the chatbot (You’ll replace this with server interaction)
-    setTimeout(() => {
-        const botResponse = getBotResponse(userInput);
-        addMessage(botResponse, "bot");
-    }, 1000);
-}
+  // Event listener for story submission
+  storyForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-// Function to add a message to the chat window
-function addMessage(message, sender) {
-    const chatWindow = document.getElementById("chat-window");
-    const messageElement = document.createElement("div");
-    messageElement.className = sender === "user" ? "user-message" : "bot-message";
-    messageElement.innerText = message;
-    chatWindow.appendChild(messageElement);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-}
+    // Get form input values
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
 
-// Sample bot responses (Replace this with backend responses)
-function getBotResponse(userInput) {
-    if (userInput.toLowerCase().includes("hello")) {
-        return "Hi there! How can I help you with coding today?";
-    } else if (userInput.toLowerCase().includes("java")) {
-        return "Java is a versatile programming language. Need a specific example?";
-    } else {
-        return "I'm still learning! Try asking something else or be more specific.";
-    }
-}
+    // Create a new article element
+    const article = document.createElement("article");
+    article.classList.add("news-item");
+    article.innerHTML = `
+      <h3>${title}</h3>
+      <p>${content}</p>
+    `;
+
+    // Add the new article to the news articles section
+    newsArticlesSection.appendChild(article);
+
+    // Clear the form
+    storyForm.reset();
+  });
+});
