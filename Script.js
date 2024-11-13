@@ -1,33 +1,31 @@
-const messages = document.getElementById("messages");
-
 function sendMessage() {
-    const input = document.getElementById("input");
-    const userMessage = input.value.trim();
+    const input = document.getElementById("user-input");
+    const message = input.value.trim();
 
-    if (userMessage) {
-        displayMessage(userMessage, "user-message");
+    if (message) {
+        addMessage(message, "user-message");
+        getBotResponse(message);
         input.value = "";
-        getBotResponse(userMessage);
     }
 }
 
-function displayMessage(text, className) {
-    const message = document.createElement("div");
-    message.className = `message ${className}`;
-    message.textContent = text;
-    messages.appendChild(message);
-    messages.scrollTop = messages.scrollHeight;
+function addMessage(text, className) {
+    const chatBox = document.getElementById("chat-box");
+    const messageDiv = document.createElement("div");
+    messageDiv.className = `message ${className}`;
+    messageDiv.textContent = text;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 function getBotResponse(userMessage) {
-    const botResponses = [
-        "Hello! How can I assist you today?",
-        "I'm here to help with anything you need.",
-        "Could you tell me more about that?",
-        "Interesting! Tell me more.",
-        "Thank you for sharing!"
-    ];
+    const responses = {
+        "hello": "Hi there! How can I assist you?",
+        "how are you?": "I'm a bot, but thanks for asking! How can I help?",
+        "what is your name?": "I'm Chatbot AI, your virtual assistant.",
+        "bye": "Goodbye! Have a great day!"
+    };
 
-    const botMessage = botResponses[Math.floor(Math.random() * botResponses.length)];
-    setTimeout(() => displayMessage(botMessage, "bot-message"), 1000);
+    const response = responses[userMessage.toLowerCase()] || "I'm here to help!";
+    setTimeout(() => addMessage(response, "bot-message"), 500);
 }
