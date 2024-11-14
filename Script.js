@@ -1,27 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const storyForm = document.getElementById("story-form");
-  const newsArticlesSection = document.getElementById("news-articles");
+function sendMessage() {
+    const userInput = document.getElementById('user-input');
+    const chatbox = document.getElementById('chatbox');
 
-  // Event listener for story submission
-  storyForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+    // Append user's message to the chatbox
+    const userMessage = document.createElement('div');
+    userMessage.textContent = "User: " + userInput.value;
+    chatbox.appendChild(userMessage);
 
-    // Get form input values
-    const title = document.getElementById("title").value;
-    const content = document.getElementById("content").value;
+    // Clear the input field
+    const message = userInput.value;
+    userInput.value = '';
 
-    // Create a new article element
-    const article = document.createElement("article");
-    article.classList.add("news-item");
-    article.innerHTML = `
-      <h3>${title}</h3>
-      <p>${content}</p>
-    `;
+    // Here you would integrate your AI chatbot API
+    const botReply = "Bot: This is where your AI's response will appear.";
 
-    // Add the new article to the news articles section
-    newsArticlesSection.appendChild(article);
+    // Append bot's reply to the chatbox
+    const botMessage = document.createElement('div');
+    botMessage.textContent = botReply;
+    chatbox.appendChild(botMessage);
 
-    // Clear the form
-    storyForm.reset();
-  });
-});
+    // Scroll to the bottom of the chatbox
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
